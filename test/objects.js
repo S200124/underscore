@@ -1024,10 +1024,7 @@
 
   QUnit.test('extract', function(assert) {
     var stooge = {name: 'moe'};
-    assert.strictEqual(_.extract(stooge, 'name'), 'moe', 'should return the property with the given name');
-    assert.strictEqual(stooge.name, void 0, 'should be undefined');
-    
-    stooge.name = 'moe';
+
     assert.strictEqual(_.extract(null, 'name'), void 0, 'should return undefined for null values');
     assert.strictEqual(stooge.name, 'moe', 'should return the property');
 
@@ -1045,6 +1042,9 @@
 
     assert.strictEqual(_.extract(stooge, 'address'), void 0, 'should be undefined');
     assert.strictEqual(stooge.name, 'moe', 'should return the property');
+
+    assert.strictEqual(_.extract(stooge, 'name'), 'moe', 'should return the property with the given name');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
   });
 
   QUnit.test('property', function(assert) {
