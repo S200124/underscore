@@ -399,6 +399,7 @@
           <li data-name="toPath">- <a href="#toPath">toPath</a></li>
           <li data-name="has">- <a href="#has">has</a></li>
           <li data-name="get">- <a href="#get">get</a></li>
+          <li data-name="extract">- <a href="#extract">extract</a></li>
           <li data-name="property">- <a href="#property">property</a></li>
           <li data-name="propertyOf">- <a href="#propertyOf">propertyOf</a></li>
           <li data-name="matcher">- <a href="#matcher">matcher</a></li>
@@ -2037,6 +2038,25 @@ _.get({a: [{b: 2}]}, ['a', 0, 'b']);
 =&gt; 2
 _.get({a: 10}, 'b', 100);
 =&gt; 100
+</pre>
+
+      <p id="extract">
+        <b class="header">extract</b><code>extract(object, key)</code>
+        <a href="docs/modules/extract.html" class="source">source</a>
+        <br>
+        The extract function takes an <b>object</b> and a <b>key</b> as arguments.
+        If the key is present in the object, it retrieves the corresponding value using
+        the get function, removes the key from the object, and returns the extracted value.
+        If the key is not found, the function returns <tt>undefined</tt>.
+      </p>
+      <pre>
+var iceCream = {flavor: "chocolate"};
+_.extract(iceCream, 'flavor');
+=&gt; 'chocolate'
+iceCream.flavor
+=&gt; undefined
+iceCream
+=&gt; {}
 </pre>
 
       <p id="has">
