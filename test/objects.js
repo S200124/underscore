@@ -1022,6 +1022,33 @@
     assert.strictEqual(_.get({x: 'y'}, []), void 0, 'returns `undefined` for a path that is an empty array');
   });
 
+  QUnit.test('extract', function(assert) {
+    var stooge = {name: 'moe'};
+    assert.strictEqual(_.extract(stooge, 'name'), 'moe', 'should return the property with the given name');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
+    stooge.name = 'moe';
+    assert.strictEqual(_.extract(null, 'name'), void 0, 'should return undefined for null values');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
+    stooge.name = 'moe';
+    assert.strictEqual(_.extract(void 0, 'name'), void 0, 'should return undefined for undefined values');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
+    stooge.name = 'moe';
+    assert.strictEqual(_.extract('foo', null), void 0, 'should return undefined for null object');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
+    stooge.name = 'moe';
+    assert.strictEqual(_.extract({x: null}, 'x'), null, 'can fetch null values');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
+    stooge.name = 'moe';
+    assert.strictEqual(_.extract(null, 'length'), void 0, 'does not crash on property access of non-objects');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
+    stooge.name = 'moe';
+    assert.strictEqual(_.extract(stooge, 'size', 10), 10, 'allows a fallback value for undefined properties');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
+    stooge.name = 'moe';
+    assert.strictEqual(_.extract(stooge, 'name', 10), 'moe', 'ignores the fallback value if the property is defined');
+    assert.strictEqual(stooge.name, void 0, 'should be undefined');
+  });
+
   QUnit.test('property', function(assert) {
     var stooge = {name: 'moe'};
     assert.strictEqual(_.property('name')(stooge), 'moe', 'should return the property with the given name');
