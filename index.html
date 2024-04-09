@@ -2041,7 +2041,7 @@ _.get({a: 10}, 'b', 100);
 </pre>
 
       <p id="extract">
-        <b class="header">extract</b><code>extract(object, key)</code>
+        <b class="header">extract</b><code>_.extract(object, key)</code>
         <a href="docs/modules/extract.html" class="source">source</a>
         <br>
         The extract function takes an <b>object</b> and a <b>key</b> as arguments.
@@ -2053,8 +2053,6 @@ _.get({a: 10}, 'b', 100);
 var iceCream = {flavor: "chocolate"};
 _.extract(iceCream, 'flavor');
 =&gt; 'chocolate'
-iceCream.flavor
-=&gt; undefined
 iceCream
 =&gt; {}
 </pre>
