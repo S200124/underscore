@@ -1023,28 +1023,88 @@
   });
 
   QUnit.test('extract', function(assert) {
-    var stooge = {name: 'moe'};
-
+    var stooge = {name: 'moe',surname:'szyslak',fullname:{first: 'moe', last: 'szyslak'}, birthday: null};
+    
     assert.strictEqual(_.extract(null, 'name'), void 0, 'should return undefined for null values');
     assert.strictEqual(stooge.name, 'moe', 'should return the property');
-
+    
     assert.strictEqual(_.extract(void 0, 'name'), void 0, 'should return undefined for undefined values');
     assert.strictEqual(stooge.name, 'moe', 'should return the property');
-
+    
     assert.strictEqual(_.extract('foo', null), void 0, 'should return undefined for null object');
     assert.strictEqual(stooge.name, 'moe', 'should return the property');
-
-    assert.strictEqual(_.extract({x: null}, 'x'), null, 'can fetch null values');
-    assert.strictEqual(stooge.name, 'moe', 'should return the property');
-
+    
+    assert.strictEqual(_.extract(stooge, 'birthday'), null, 'can fetch null values');
+    assert.strictEqual(stooge.birthday, void 0, 'should return the property');
+    
     assert.strictEqual(_.extract(null, 'length'), void 0, 'does not crash on property access of non-objects');
     assert.strictEqual(stooge.name, 'moe','should return the property');
-
+    
     assert.strictEqual(_.extract(stooge, 'address'), void 0, 'should be undefined');
     assert.strictEqual(stooge.name, 'moe', 'should return the property');
-
+    
     assert.strictEqual(_.extract(stooge, 'name'), 'moe', 'should return the property with the given name');
     assert.strictEqual(stooge.name, void 0, 'should be undefined');
+    
+    assert.deepEqual(_.extract(stooge, 'fullname', true), {first: 'moe', last: 'szyslak'}, 'should return the property with the given name');
+    assert.strictEqual(stooge.fullname, void 0, 'should be undefined');
+    
+    assert.strictEqual(_.extract(stooge, 'surname', true), 'szyslak', 'should return the property even with the deeep delete flag');
+    assert.strictEqual(stooge.surname, void 0, 'should be undefined');
+    
+    assert.deepEqual(stooge, {}, 'after all the previous tests, it should be an empty object');
+    
+    // Since 'extract' use the 'get' function, we want to test also the deep property delete
+    stooge = {
+      name: 'moe szyslak',
+      fullname: {first: 'moe', last: 'szyslak'},
+      birthday: {day:'01',month:'02',year:'2003'},
+      married: false,
+      address: {street: 'tavern', city: 'springfield', state: null, zips: ['01106','01107']},
+      kins: null,
+      ancestors: {father: {name:'tobia'}}
+    };
+    
+    assert.strictEqual(_.extract(stooge, ['address', 'country']), void 0, 'should be undefined');
+    assert.strictEqual(stooge.name, 'moe szyslak', 'the other properties should be untouched');
+    
+    assert.strictEqual(_.extract(stooge, ['married']), false, 'can fetch falsy values');
+    assert.strictEqual(stooge.married, void 0, 'should be undefined');
+    
+    assert.strictEqual(_.extract(stooge, ['address', 'state']), null, 'can fetch null values deeply');
+    assert.strictEqual(stooge.address.state, void 0, 'should be undefined');
+    
+    assert.strictEqual(_.extract(stooge, ['kins', 'son', 'grandson']), void 0, 'does not crash on property access of nested non-objects');
+    assert.strictEqual(stooge.kins, null, 'the property should stay untouched');
+    
+    assert.strictEqual(_.extract(stooge, []), void 0, 'returns `undefined` for a path that is an empty array');
+    assert.strictEqual(stooge.name, 'moe szyslak', 'the other properties should be untouched');
+    
+    assert.strictEqual(_.extract(stooge, ['address', null]), void 0, 'returns `undefined` for a path that has not valid elements');
+    assert.strictEqual(stooge.name, 'moe szyslak', 'the other properties should be untouched');
+    
+    assert.strictEqual(_.extract(stooge, ['address', 'street']), 'tavern', 'can get a nested property');
+    assert.strictEqual(stooge.address.street, void 0, 'should be undefined');
+    
+    assert.deepEqual(_.extract(stooge, ['address', 'zips']), ['01106','01107'], 'can get an array property');
+    assert.strictEqual(stooge.address.zips, void 0, 'should be undefined');
+    
+    assert.strictEqual(_.extract(stooge, ['birthday', 'day'], false), '01', 'can get a nested property');
+    assert.strictEqual(_.extract(stooge, ['birthday', 'month'], false), '02', 'can get a nested property');
+    assert.strictEqual(_.extract(stooge, ['birthday', 'year'], false), '2003', 'can get a nested property');
+    assert.deepEqual(stooge.birthday, {}, 'should be an empty object');
+    
+    assert.strictEqual(_.extract(stooge, ['fullname', 'first'], true), 'moe', 'check the deleteEmpty flag');
+    assert.strictEqual(stooge.fullname.first, void 0, 'should be accessible, but undefined');
+    assert.strictEqual(stooge.fullname.last, 'szyslak', 'should be accessible and defined');
+    
+    assert.strictEqual(_.extract(stooge, ['fullname', 'last'], true), 'szyslak', 'check the deleteEmpty flag, deleting the empty object');
+    assert.strictEqual(stooge.fullname, void 0, 'fullname itself should be undefined');
+    
+    assert.strictEqual(_.extract(stooge, ['ancestors', 'father', 'name'], true), 'tobia', 'delete all the empty objects in the path');
+    assert.deepEqual(stooge.ancestors, void 0, 'should be undefined');
+    
+    assert.strictEqual(stooge.address.city, 'springfield', 'after all previous tests, the other deep properties should be untouched');
   });
 
   QUnit.test('property', function(assert) {
