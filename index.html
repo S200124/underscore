@@ -2040,16 +2040,18 @@ _.get({a: 10}, 'b', 100);
 =&gt; 100
 </pre>
 
-      <p id="extract">
-        <b class="header">extract</b><code>_.extract(object, key)</code>
-        <a href="docs/modules/extract.html" class="source">source</a>
-        <br>
-        The extract function takes an <b>object</b> and a <b>key</b> as arguments.
-        If the key is present in the object, it retrieves the corresponding value using
-        the get function, removes the key from the object, and returns the extracted value.
-        If the key is not found, the function returns <tt>undefined</tt>.
-      </p>
-      <pre>
+<p id="extract">
+	<b class="header">extract</b><code>_.extract(object, key, [deleteEmpty])</code>
+	<a href="docs/modules/extract.html" class="source">source</a>
+	<br>
+	The extract function takes an <b>object</b> and a <b>key</b> as arguments.
+	If the key is present in the object, it retrieves the corresponding value using
+	the get function, removes the key from the object, and returns the extracted value.
+	If the key is not found, the function returns <tt>undefined</tt>.
+	If <b>deleteEmpty</b> is <tt>true</tt>, the function deletes any empty object in the path
+	(but not the root object).
+</p>
+<pre>
 var iceCream = {flavor: "chocolate"};
 _.extract(iceCream, 'flavor');
 =&gt; 'chocolate'
