@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html>
@@ -848,7 +849,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> has <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./has.js&#x27;</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> isUndefined <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./isUndefined.js&#x27;</span>;
 <span class="hljs-keyword">import</span> get <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./get.js&#x27;</span>;
         </li>
         
@@ -865,10 +866,9 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">extract</span>(<span class="hljs-params">object, key</span>) {
-  <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">has</span>(object, key))
-    <span class="hljs-keyword">return</span>;
   <span class="hljs-keyword">var</span> value = <span class="hljs-title function_">get</span>(object, key);
-  <span class="hljs-keyword">delete</span> object[key];
+  <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isUndefined</span>(value))
+    <span class="hljs-keyword">delete</span> object[key];
   <span class="hljs-keyword">return</span> value;
 }</pre></div></div>
             
