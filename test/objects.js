@@ -1035,7 +1035,7 @@
     assert.strictEqual(stooge.name, 'moe', 'should return the property');
     
     assert.strictEqual(_.extract(stooge, 'birthday'), null, 'can fetch null values');
-    assert.strictEqual(stooge.birthday, void 0, 'should return the property');
+    assert.strictEqual(stooge.birthday, void 0, 'should  be undefined');
     
     assert.strictEqual(_.extract(null, 'length'), void 0, 'does not crash on property access of non-objects');
     assert.strictEqual(stooge.name, 'moe','should return the property');
