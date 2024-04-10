@@ -1,4 +1,5 @@
 import isEmpty from './isEmpty.js';
+import has from './_has.js';
 import toPath from './_toPath.js';
 
 /**
@@ -10,10 +11,11 @@ import toPath from './_toPath.js';
  */
 export default function deepDelete(object, path, deleteEmpty) {
 	var keys = toPath(path);
+	if(!keys.length) return true;
+	
 	var key = keys.shift();
-	if(!key) return true;
 
-	if(deepDelete(object[key], keys, deleteEmpty)) {
+	if(has(object, key) && deepDelete(object[key], keys, deleteEmpty)) {
 		delete object[key];
 		return isEmpty(object) && deleteEmpty;
 	}
