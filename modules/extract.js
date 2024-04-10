@@ -1,5 +1,5 @@
-import has from './has.js';
 import get from './get.js';
+import isUndefined from './isUndefined.js';
 
 /**
  * Extracts a value from an object and removes the corresponding key.
@@ -8,9 +8,8 @@ import get from './get.js';
  * @returns {*} The extracted value or undefined if the key is not found.
  */
 export default function extract(object, key) {
-  if (!has(object, key))
-    return;
   var value = get(object, key);
-  delete object[key];
+  if(!isUndefined(value))
+	delete object[key];
   return value;
 }
