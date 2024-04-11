@@ -75,6 +75,11 @@
               <a class="source" href="_createSizePropertyCheck.html">
                 modules/_createSizePropertyCheck.js
               </a>
+			  
+			  
+			  <a class="source" href="_deepDelete.html">
+                modules/_deepDelete.js
+              </a>
 
 
               <a class="source" href="_deepGet.html">
@@ -854,8 +859,7 @@
           <div class='highlight'>
             <pre>
 <span class="hljs-keyword">import</span> isUndefined <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./isUndefined.js&#x27;</span>;
-<span class="hljs-keyword">import</span> toPath <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./toPath.js&#x27;</span>;
-<span class="hljs-keyword">import</span> isEmpty <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./isEmpty.js&#x27;</span>;
+<span class="hljs-keyword">import</span> deepDelete <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./_deepDelete.js&#x27;</span>;
 <span class="hljs-keyword">import</span> get <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./get.js&#x27;</span>;
         </li>
         <li id="section-2">
@@ -871,20 +875,9 @@
 				(but not the root object).</p>
             </div>
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">extract</span>(<span class="hljs-params">object, key, deleteEmpty</span>) {
-  <span class="hljs-keyword">var</span> deepDelete = <span class="hljs-keyword">function</span>(<span class="hljs-params">object, keys, del</span>) {
-    <span class="hljs-keyword">var</span> key = keys.shift();
-    
-    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_">key</span>) <span class="hljs-keyword">return</span> true;
-
-    <span class="hljs-keyword">if</span>(deepDelete(object[key], keys, del)) {
-      <span class="hljs-keyword">delete</span> object[key];
-      <span class="hljs-keyword">return</span> <span class="hljs-title function_">isEmpty</span>(object) && del;
-    }
-  }
-
   <span class="hljs-keyword">var</span> value = <span class="hljs-title function_">get</span>(object, key);
   <span class="hljs-keyword">if</span>(!<span class="hljs-title function_">isUndefined</span>(value))
-    deepDelete(object, <span class="hljs-title function_">toPath</span>(key), <span class="hljs-title class_">Boolean</span>(deleteEmpty));
+    deepDelete(object, key, deleteEmpty);
   <span class="hljs-keyword">return</span> value;
 }</pre>
           </div>
